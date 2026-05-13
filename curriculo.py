@@ -1,0 +1,120 @@
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def curriculo():
+   
+    return '''
+    <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currículo</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #1e3a8a;
+}
+
+h2 {
+    color: #2563eb;
+    margin-top: 25px;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+.barra {
+    width: 100%;
+    height: 20px;
+    background: #ddd;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.nivel {
+    height: 100%;
+    border-radius: 10px;
+}
+
+.ingles {
+    width: 70%;
+    background: #2563eb;
+}
+
+.espanhol {
+    width: 40%;
+    background: #16a34a;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1> Thiago</h1>
+
+        <div class="info">
+            <p><strong>Telefone:</strong> (319643512461)</p>
+            <p><strong>Email:</strong>  Thiagopereira@gmail.com</p>
+        </div>
+
+        <h2>Escolas</h2>
+        <ul>
+            <li>Ensino medio</li> 
+                <li> Cotemig </li>
+            
+        </ul>
+
+        <h2>Experiência de Trabalho</h2>
+        <ul>
+           <li>Cursei estagio de redes por periodo de 8 meses</li> 
+          
+        </ul>
+
+        <h2>Cursos</h2>
+        <ul>
+           <li>Banco de Dados</li>
+                <li>Python</li>
+            <li>Html</li>
+        </ul>
+
+        <h2>Idiomas</h2>
+
+        <p><strong>Inglês:</strong> Ingles</p>
+        <div class="barra">
+            <div class="nivel ingles"></div>
+        </div>
+
+        <p><strong>Espanhol:</strong> Espanhol
+        <div class="barra">
+            <div class="nivel espanhol"></div>
+        </div>
+
+    </div>
+
+</body>
+</html>'''
+
+if __name__ == '__main__':
+    app.run(debug=True)
