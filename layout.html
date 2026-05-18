@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <title>{% block title %}{% endblock %} - Flask Menu</title>
+
+</head>
+
+<body>
+    <div class="menu">
+        <nav>
+            <ul>
+               
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('page1') }}">Sobre Python</a></li>
+              
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+
+</html>
