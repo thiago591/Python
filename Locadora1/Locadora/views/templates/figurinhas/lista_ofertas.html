@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block title %}Troca de Figurinhas{% endblock %}
+
+{% block content %}
+<h1>Ofertas de troca — Copa do Mundo</h1>
+<p><a class="btn" href="{{ url_for('figurinhas.cadastrar_oferta') }}">+ Nova oferta</a></p>
+
+{% if ofertas %}
+<table>
+    <thead>
+        <tr>
+            <th>Colecionador</th>
+            <th>Cidade</th>
+            <th>Oferece</th>
+            <th>Deseja</th>
+            <th>Observação</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for oferta in ofertas %}
+            <tr>
+                <td>{{ oferta.colecionador.apelido }}</td>
+                <td>{{ oferta.colecionador.cidade }}</td>
+                <td>
+                    {% for item in oferta.itens %}
+                        {% if item.tipo == "oferece" %}
+                            {{ item.figurinha.numero }} - {{ item.figurinha.nome_jogador }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for item in oferta.itens %}
+                        {% if item.tipo == "deseja" %}
+                            {{ item.figurinha.numero }} - {{ item.figurinha.nome_jogador }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ oferta.observacao or "Sem observação" }}</td>
+                <td>{{ oferta.data_criacao.strftime("%d/%m/%Y %H:%M") }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p class="vazio">Nenhuma oferta cadastrada ainda. Clique em <strong>Nova oferta</strong> para começar.</p>
+{% endif %}
+{% endblock %}

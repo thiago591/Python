@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block title %}Nova oferta{% endblock %}
+
+{% block content %}
+<h1>Nova oferta de troca</h1>
+
+<form method="POST" action="{{ url_for('figurinhas.cadastrar_oferta') }}">
+    <div class="form-grupo">
+        <label for="colecionador_id">Colecionador</label>
+        <select id="colecionador_id" name="colecionador_id" required>
+            <option value="">Quem está oferecendo?</option>
+            {% for colecionador in colecionadores %}
+                <option value="{{ colecionador.id }}">
+                    {{ colecionador.apelido }} - {{ colecionador.cidade }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-grupo">
+        <label for="figurinha_oferece_id">Figurinha que OFERECE</label>
+        <select id="figurinha_oferece_id" name="figurinha_oferece_id" required>
+            <option value="">Numero / jogador...</option>
+            {% for figurinha in figurinhas %}
+                <option value="{{ figurinha.id }}">
+                    {{ figurinha.numero }} - {{ figurinha.nome_jogador }} / {{ figurinha.time }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-grupo">
+        <label for="figurinha_deseja_id">Figurinha que DESEJA</label>
+        <select id="figurinha_deseja_id" name="figurinha_deseja_id" required>
+            <option value="">Numero / jogador...</option>
+            {% for figurinha in figurinhas %}
+                <option value="{{ figurinha.id }}">
+                    {{ figurinha.numero }} - {{ figurinha.nome_jogador }} / {{ figurinha.time }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-grupo">
+        <label for="observacao">Observação</label>
+        <input id="observacao" type="text" name="observacao" placeholder="Ex.: troco repetida">
+    </div>
+
+    <button type="submit">Publicar oferta</button>
+</form>
+
+<p><a href="{{ url_for('figurinhas.index') }}">← Voltar</a></p>
+{% endblock %}
