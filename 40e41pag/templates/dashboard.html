@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Visão geral — FocusBoard{% endblock %}
+{% block content %}
+<section class="hero-row">
+    <div><span class="eyebrow">VISÃO GERAL</span><h1>Seu dia, sob controle.</h1><p>Veja o que precisa ser feito e mantenha seu foco.</p></div>
+    <a class="primary-action compact" href="{{ url_for('nova_tarefa') }}"><i class="bi bi-plus-lg"></i> Nova tarefa</a>
+</section>
+
+<div class="stats-grid">
+    <div class="stat-card"><div class="stat-icon blue"><i class="bi bi-list-task"></i></div><div><small>Total de tarefas</small><strong>{{ resumo.total }}</strong></div></div>
+    <div class="stat-card"><div class="stat-icon amber"><i class="bi bi-hourglass-split"></i></div><div><small>Pendentes</small><strong>{{ resumo.pendente }}</strong></div></div>
+    <div class="stat-card"><div class="stat-icon violet"><i class="bi bi-lightning-charge"></i></div><div><small>Em andamento</small><strong>{{ resumo.andamento }}</strong></div></div>
+    <div class="stat-card"><div class="stat-icon green"><i class="bi bi-check2-circle"></i></div><div><small>Concluídas</small><strong>{{ resumo.concluida }}</strong></div></div>
+</div>
+
+<div class="content-grid">
+    <section class="tasks-panel">
+        <div class="panel-head"><div><h2>Tarefas</h2><p>{{ resumo.concluida }} de {{ resumo.total }} concluídas</p></div><div class="progress-mini"><span style="width: {{ resumo.percentual }}%"></span></div></div>
+        <div class="filter-row">
+            <form class="search-box" method="get" action="{{ url_for('dashboard') }}"><i class="bi bi-search"></i><input name="q" value="{{ search_query }}" placeholder="Buscar tarefa..."><input type="hidden" name="status" value="{{ status_filter }}"></form>
+            <div class="filter-pills">
+                <a class="filter-pill {% if status_filter == 'todas' %}active{% endif %}" href="{{ url_for('dashboard', status='todas', q=search_query) }}">Todas</a>
+                <a class="filter-pill {% if status_filter == 'pendente' %}active{% endif %}" href="{{ url_for('dashboard', status='pendente', q=search_query) }}">Pendentes</a>
+                <a class="filter-pill {% if status_filter == 'andamento' %}active{% endif %}" href="{{ url_for('dashboard', status='andamento', q=search_query) }}">Em andamento</a>
+                <a class="filter-pill {% if status_filter == 'concluida' %}active{% endif %}" href="{{ url_for('dashboard', status='concluida', q=search_query) }}">Concluídas</a>
+            </div>
+        </div>
+
+        {% if tarefas %}
+        <div class="task-list">
+            {% for tarefa in tarefas %}
+            <article class="task-row status-{{ tarefa['status'] }}">
+                <div class="task-check {% if tarefa['status'] == 'concluida' %}done{% endif %}"><i class="bi {% if tarefa['status'] == 'concluida' %}bi-check2{% else %}bi-circle{% endif %}"></i></div>
+                <div class="task-main"><h3 class="{% if tarefa['status'] == 'concluida' %}done-title{% endif %}">{{ tarefa['titulo'] }}</h3><p>{{ tarefa['descricao'] or 'Sem descrição.' }}</p></div>
+                <span class="status-chip {{ tarefa['status'] }}">{% if tarefa['status']=='pendente' %}Pendente{% elif tarefa['status']=='andamento' %}Em andamento{% else %}Concluída{% endif %}</span>
+                <div class="task-actions"><a href="{{ url_for('editar', task_id=tarefa['id']) }}" title="Editar"><i class="bi bi-pencil"></i></a><form method="post" action="{{ url_for('concluir', task_id=tarefa['id']) }}"><button title="Alterar status"><i class="bi bi-check-lg"></i></button></form><form method="post" action="{{ url_for('excluir', task_id=tarefa['id']) }}" onsubmit="return confirm('Deseja realmente excluir esta tarefa?');"><button class="danger" title="Excluir"><i class="bi bi-trash3"></i></button></form></div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state"><div class="empty-icon"><i class="bi bi-inbox"></i></div><h3>Nada por aqui</h3><p>{% if search_query %}Nenhuma tarefa combina com sua busca.{% else %}Crie sua primeira tarefa e comece a organizar o dia.{% endif %}</p><a class="primary-action compact" href="{{ url_for('nova_tarefa') }}"><i class="bi bi-plus-lg"></i> Criar tarefa</a></div>
+        {% endif %}
+    </section>
+
+    <aside class="side-column">
+        <div class="quote-card"><div class="quote-top"><span class="quote-icon"><i class="bi bi-quote"></i></span><button id="novaFrase" title="Nova frase"><i class="bi bi-arrow-clockwise"></i></button></div><small>PARA HOJE</small><p id="fraseMotivacional">Carregando...</p><div class="quote-line"></div><span>Uma coisa de cada vez.</span></div>
+        <div class="quick-card"><div class="quick-head"><h3>Acesso rápido</h3><i class="bi bi-command"></i></div><a href="{{ url_for('nova_tarefa') }}"><i class="bi bi-plus-circle"></i><span>Adicionar tarefa</span><i class="bi bi-chevron-right"></i></a><a href="{{ url_for('dashboard_progresso') }}"><i class="bi bi-pie-chart"></i><span>Ver progresso</span><i class="bi bi-chevron-right"></i></a></div>
+    </aside>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Cadastro — FocusBoard{% endblock %}
+{% block content %}
+<div class="auth-page">
+    <div class="auth-decoration register-decoration"><div class="orb orb-one"></div><div class="orb orb-two"></div><div class="auth-quote"><i class="bi bi-stars"></i><strong>Comece simples.<br>Avance todos os dias.</strong><span>Crie seu espaço pessoal de produtividade.</span></div></div>
+    <div class="auth-form-wrap">
+        <div class="auth-heading"><span class="eyebrow">PRIMEIRO PASSO</span><h1>Crie sua conta.</h1><p>Leva menos de um minuto para começar.</p></div>
+        <form method="post" class="modern-form">
+            <div class="field"><label for="nome">Nome</label><div class="input-icon"><i class="bi bi-person"></i><input type="text" id="nome" name="nome" maxlength="80" placeholder="Seu nome" required autocomplete="name"></div></div>
+            <div class="field"><label for="email">E-mail</label><div class="input-icon"><i class="bi bi-envelope"></i><input type="email" id="email" name="email" maxlength="120" placeholder="voce@email.com" required autocomplete="email"></div></div>
+            <div class="field"><label for="senha">Senha</label><div class="input-icon"><i class="bi bi-lock"></i><input type="password" id="senha" name="senha" minlength="6" placeholder="Mínimo de 6 caracteres" required autocomplete="new-password"></div></div>
+            <div class="field"><label for="confirmar_senha">Confirmar senha</label><div class="input-icon"><i class="bi bi-shield-check"></i><input type="password" id="confirmar_senha" name="confirmar_senha" minlength="6" placeholder="Repita sua senha" required autocomplete="new-password"></div></div>
+            <button class="primary-action" type="submit">Criar conta <i class="bi bi-arrow-right"></i></button>
+        </form>
+        <p class="auth-switch">Já possui uma conta? <a href="{{ url_for('login') }}">Entrar</a></p>
+    </div>
+</div>
+{% endblock %}
